@@ -7,6 +7,20 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>WebAssembly.FSharp</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Matthew Rodatus</Authors>
+    <Title>F# Wrapper for WebAssembly for .NET</Title>
+    <PackageDescription>Provides an idiomatic F# WebAssembly module generation toolkit around the base WebAssembly package.</PackageDescription>
+    <RepositoryUrl>https://github.com/munik/dotnet-webassembly-fsharp</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://github.com/munik/dotnet-webassembly-fsharp</PackageProjectUrl>
+    <Copyright>Copyright © Matthew Rodatus. All rights reserved.</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>WebAssembly WASM F# FSharp</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Generation.fs" />
