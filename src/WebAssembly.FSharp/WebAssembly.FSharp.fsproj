@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
+    <RootNamespace>WebAssembly.FSharp</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Types.fs" />
+    <Compile Include="Generation.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WebAssembly" Version="1.2.0" />
+  </ItemGroup>
+
+</Project>
