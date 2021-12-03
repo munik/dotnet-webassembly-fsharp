@@ -1,4 +1,4 @@
-﻿namespace WebAssembly.FSharp
+﻿namespace WebAssembly.FSharp.Generation
 
 type BlockType =
     | Int32

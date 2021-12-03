@@ -1,7 +1,7 @@
-namespace WebAssembly.FSharp.Tests
+namespace WebAssembly.FSharp.Generation.Tests
 
-open WebAssembly.FSharp
 open WebAssembly.FSharp.Generation
+open WebAssembly.FSharp.Generation.Modules
 open NUnit.Framework
 
 module ValueTypes =
@@ -105,6 +105,54 @@ module SimpleFunction =
 
     let invokeExport fn moduleDefinition =
         let m = generateModule moduleDefinition
+        let instanceCreator = m.Compile<Exports>()
+        use instance = instanceCreator.Invoke(WebAssembly.Runtime.ImportDictionary())
+        fn instance.Exports
+
+    [<Test>]
+    let TestExportA () =
+        moduleDefinition
+        |> invokeExport (fun exports ->
+            Assert.AreEqual(5, exports.A(1, 2)))
+
+    [<Test>]
+    let TestExportB () =
+        moduleDefinition
+        |> invokeExport (fun exports ->
+            Assert.AreEqual(2, exports.B()))
+
+module DynamicNames =
+    [<AbstractClass>]
+    type Exports =
+        abstract member A : int32 * int32 -> int32
+        abstract member B : unit -> int32
+
+    let moduleDefinition = {
+        Functions = [
+            { Id = (0u, "A")
+              ParameterTypes = [ Int32; Int32 ]
+              ReturnType = Int32
+              Locals = []
+              Body = [ LocalGet 0u
+                       LocalGet 1u
+                       Call (1u, "B")
+                       Int32Add
+                       Int32Add
+                       End ] }
+            { Id = (1u, "B")
+              ParameterTypes = [ ]
+              ReturnType = Int32
+              Locals = []
+              Body = [ Int32Constant 2
+                       End ] }
+
+        ]
+        Globals = []
+        Exports = [ FunctionExport (0u, "A"); FunctionExport (1u, "B") ]
+    }
+
+    let invokeExport fn moduleDefinition =
+        let m = generateModuleDynamicNames id id moduleDefinition
         let instanceCreator = m.Compile<Exports>()
         use instance = instanceCreator.Invoke(WebAssembly.Runtime.ImportDictionary())
         fn instance.Exports
