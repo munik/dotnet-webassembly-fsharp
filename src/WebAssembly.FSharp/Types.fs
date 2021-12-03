@@ -26,7 +26,13 @@ type Instruction<'fn, 'glbl> =
     | GlobalSet of glbl : 'glbl
     | If
     | Int32Add
+    | Int64Add
+    | Float32Add
+    | Float64Add
     | Int32Constant of value : int32
+    | Int64Constant of value : int64
+    | Float32Constant of value : float32
+    | Float64Constant of value : float
     | Int32Equal
     | Int32EqualZero
     | Int32Load
