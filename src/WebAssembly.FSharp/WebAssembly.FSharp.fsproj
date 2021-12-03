@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <PackageId>WebAssembly.FSharp</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Matthew Rodatus</Authors>
     <Title>F# Wrapper for WebAssembly for .NET</Title>
     <PackageDescription>Provides an idiomatic F# WebAssembly module generation toolkit around the base WebAssembly package.</PackageDescription>
