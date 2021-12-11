@@ -1,10 +1,10 @@
 module WebAssembly.FSharp.Generation.Modules
 
-let generateModuleDynamicNames<'fn, 'glbl> (getFunctionInfo : 'fn -> uint32 * string) (getGlobalInfo : 'glbl -> uint32 * string) (moduleDefinition : ModuleDefinition<'fn, 'glbl>) =
+let generateModuleDynamicNames (getFunctionInfo : 'fn -> uint32 * string) (getGlobalInfo : 'glbl -> uint32 * string) (getMemoryInfo : 'mem -> uint32 * string) (moduleDefinition : ModuleDefinition<'fn, 'glbl, 'mem>) =
     let m = WebAssembly.Module()
     moduleDefinition.Functions |> Seq.iter (Functions.applyFunction m (getFunctionInfo >> fst) (getGlobalInfo >> fst))
     moduleDefinition.Globals |> Seq.iter (Globals.applyGlobal m (getFunctionInfo >> fst) (getGlobalInfo >> fst))
-    moduleDefinition.Exports |> Seq.iter (Exports.applyExport m getFunctionInfo getGlobalInfo)
+    moduleDefinition.Exports |> Seq.iter (Exports.applyExport m getFunctionInfo getGlobalInfo getMemoryInfo)
     m
 
 let getUnionCaseInfo<'a> (a : 'a) : uint32 * string =
@@ -13,9 +13,10 @@ let getUnionCaseInfo<'a> (a : 'a) : uint32 * string =
 
 let getTag<'a> = getUnionCaseInfo<'a> >> fst
 
-let generateModule<'fn, 'glbl> (moduleDefinition : ModuleDefinition<'fn, 'glbl>) =
+let generateModule (moduleDefinition : ModuleDefinition<'fn, 'glbl, 'mem>) =
     let m = WebAssembly.Module()
     moduleDefinition.Functions |> Seq.iter (Functions.applyFunction m getTag getTag)
     moduleDefinition.Globals |> Seq.iter (Globals.applyGlobal m getTag getTag)
-    moduleDefinition.Exports |> Seq.iter (Exports.applyExport m getUnionCaseInfo getUnionCaseInfo)
+    moduleDefinition.Exports |> Seq.iter (Exports.applyExport m getUnionCaseInfo getUnionCaseInfo getUnionCaseInfo)
+    moduleDefinition.Memories |> Seq.iter (Memory.applyMemory m getTag)
     m

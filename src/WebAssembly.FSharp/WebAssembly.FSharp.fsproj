@@ -25,6 +25,7 @@
     <Compile Include="Generation/Types.fs" />
     <Compile Include="Generation/Instructions.fs" />
     <Compile Include="Generation/Functions.fs" />
+    <Compile Include="Generation/Memory.fs" />
     <Compile Include="Generation/Globals.fs" />
     <Compile Include="Generation/Exports.fs" />
     <Compile Include="Generation/Modules.fs" />

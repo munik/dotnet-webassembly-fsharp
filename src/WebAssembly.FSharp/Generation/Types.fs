@@ -58,9 +58,10 @@ type FunctionDefinition<'fn, 'glbl> = {
     Body : Instruction<'fn, 'glbl> list
 }
 
-type ExportDefinition<'fn, 'glbl> =
+type ExportDefinition<'fn, 'glbl, 'mem> =
     | FunctionExport of 'fn
     | GlobalExport of 'glbl
+    | MemoryExport of 'mem
 
 type GlobalDefinition<'fn, 'glbl> = {
     Id : 'glbl
@@ -69,8 +70,15 @@ type GlobalDefinition<'fn, 'glbl> = {
     Initializer : Instruction<'fn, 'glbl> list
 }
 
-type ModuleDefinition<'fn, 'glbl> = {
+type MemoryDefinition<'mem> = {
+    Id : 'mem
+    MinimumPages : uint32
+    MaximumPages : uint32
+}
+
+type ModuleDefinition<'fn, 'glbl, 'mem> = {
     Functions : FunctionDefinition<'fn, 'glbl> list
-    Exports : ExportDefinition<'fn, 'glbl> list
+    Exports : ExportDefinition<'fn, 'glbl, 'mem> list
     Globals : GlobalDefinition<'fn, 'glbl> list
+    Memories : MemoryDefinition<'mem> list
 }

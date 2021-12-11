@@ -39,6 +39,7 @@ module ValueTypes =
         ]
         Globals = []
         Exports = [ FunctionExport I32; FunctionExport I64; FunctionExport F32; FunctionExport F64 ]
+        Memories = []
     }
 
     let invokeExport fn moduleDefinition =
@@ -101,6 +102,7 @@ module SimpleFunction =
         ]
         Globals = []
         Exports = [ FunctionExport A; FunctionExport B ]
+        Memories = []
     }
 
     let invokeExport fn moduleDefinition =
@@ -149,10 +151,11 @@ module DynamicNames =
         ]
         Globals = []
         Exports = [ FunctionExport (0u, "A"); FunctionExport (1u, "B") ]
+        Memories = []
     }
 
     let invokeExport fn moduleDefinition =
-        let m = generateModuleDynamicNames id id moduleDefinition
+        let m = generateModuleDynamicNames id id id moduleDefinition
         let instanceCreator = m.Compile<Exports>()
         use instance = instanceCreator.Invoke(WebAssembly.Runtime.ImportDictionary())
         fn instance.Exports
