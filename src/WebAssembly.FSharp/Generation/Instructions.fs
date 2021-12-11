@@ -8,12 +8,12 @@ let convertValueType : ValueType -> WebAssembly.WebAssemblyValueType = function
     | ValueType.Float32 -> WebAssembly.WebAssemblyValueType.Float32
     | ValueType.Float64 -> WebAssembly.WebAssemblyValueType.Float64
 
-let convertBlockType : BlockType -> WebAssembly.BlockType = function
-    | BlockType.Int32 -> WebAssembly.BlockType.Int32
-    | BlockType.Int64 -> WebAssembly.BlockType.Int64
-    | BlockType.Float32 -> WebAssembly.BlockType.Float32
-    | BlockType.Float64 -> WebAssembly.BlockType.Float64
-    | BlockType.Empty -> WebAssembly.BlockType.Empty
+let convertBlockType : ValueType option -> WebAssembly.BlockType = function
+    | Some ValueType.Int32 -> WebAssembly.BlockType.Int32
+    | Some ValueType.Int64 -> WebAssembly.BlockType.Int64
+    | Some ValueType.Float32 -> WebAssembly.BlockType.Float32
+    | Some ValueType.Float64 -> WebAssembly.BlockType.Float64
+    | None -> WebAssembly.BlockType.Empty
 
 let genInstruction<'fn, 'glbl>
     (getFunctionIndex : 'fn -> uint32)

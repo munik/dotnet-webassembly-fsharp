@@ -1,12 +1,5 @@
 ﻿namespace WebAssembly.FSharp.Generation
 
-type BlockType =
-    | Int32
-    | Int64
-    | Float32
-    | Float64
-    | Empty
-
 type ValueType = 
     | Int32
     | Int64
@@ -14,7 +7,7 @@ type ValueType =
     | Float64
 
 type Instruction<'fn, 'glbl> =
-    | Block of blockType : BlockType
+    | Block of blockType : ValueType option
     | Branch of block : uint32
     | BranchIf of block : uint32
     | BranchTable of defaultLabel : uint32 * labels : uint32 list
@@ -42,7 +35,7 @@ type Instruction<'fn, 'glbl> =
     | LocalGet of uint32
     | LocalSet of uint32
     | LocalTee of uint32
-    | Loop of block : BlockType
+    | Loop of block : ValueType option
     | Return
 
 type LocalDefinition = {

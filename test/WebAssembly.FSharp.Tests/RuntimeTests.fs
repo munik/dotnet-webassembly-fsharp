@@ -32,7 +32,7 @@ module RudimentaryUTF32StringEquals =
                 Return
                 End
 
-                Block BlockType.Empty // block 0
+                Block None // block 0
 
                 // store length and return true if length is zero
                 LocalGet 0u
@@ -51,7 +51,7 @@ module RudimentaryUTF32StringEquals =
                 Int32Add
                 LocalSet 1u
 
-                Loop BlockType.Empty // block 1
+                Loop None // block 1
                 LocalGet 0u
                 Int32Load
                 LocalGet 1u
